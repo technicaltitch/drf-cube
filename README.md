@@ -1,15 +1,23 @@
 # drf-cube
 
-`drf-cube` turns a Django schema into a small, configurable
-data cube REST endpoint, allowing users to explore fact data by creating ad-hoc aggregated queries. 
-Users choose the dimensions to drill in to ('group by' in SQL), filters to apply, facts of interest, 
-and row breakdowns to report, dynamically in the URL, so users can explore data flexibly and interactively. 
-The endpoint applies filters and returns totals and row composition over those dimensions. 
-Aggregation is done by the database using the Django ORM, so is reasonably efficient. 
+Many Django projects successfully serve specific organizational needs, but don't warrant a full 
+Tableau (or Superset or Qlik) reporting front end. This leaves potentially valuable, live 
+production data out of reach of decision makers.
 
-It is a library, not a Django application. It adds no models, migrations,
-views, admin, or settings; configure a serializer and viewset around models you
-already own.
+This tiny utility aims to fill that gap. In just 30 lines of boilerplate, an entire Django 
+schema can be made available via a data cube-like REST endpoint. Users can explore fact 
+data interactively by constructing ad-hoc aggregated queries simply by setting URL parameters. 
+(A very basic HTML UI is also provided.)
+
+By choosing dimensions to drill into ('group by' in SQL, including across table joins),
+filters to apply, and facts of interest, users can explore data flexibly directly from the 
+URL. The endpoint applies the filters and returns totals and row composition over those 
+dimensions. Aggregation is handled by the database using the Django ORM, making it highly 
+efficient over large datasets.
+
+Simply configure a serializer, viewset, and optionally UI. With an hour or two of 
+developer time, your users can drill down, slice, and filter across the database,  
+from their browser.
 
 ## What you can build with it
 
