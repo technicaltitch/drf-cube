@@ -13,13 +13,12 @@ already own.
 
 ## What you can build with it
 
-`drf-cube` turns one DRF endpoint into a flexible reporting surface. Configure
+Configure
 the public dimensions and measures once; clients then choose the level of
 aggregation in the URL. For example, the same sales endpoint can return one
 total for all sales, totals by region, or totals by region and product
-category. Select a related-field path in `field_to_database_path()` when a
-dimension lives on a related table, so the cube can group across the model
-relationships your Django query already understands.
+category, and show the proportion of each row by product. The cube groups 
+across model relationships out of the box, using your Django schema.
 
 - **Choose the grain.** `fields` says which public dimensions to include in
   the response. `drf-cube` groups by those dimensions and aggregates the
@@ -43,6 +42,25 @@ relationships your Django query already understands.
 In short, configure what is safe and meaningful for your product; let a
 dashboard or trusted analyst vary the grouping, filters, composition question,
 thresholds, ordering, and pagination without needing a new report endpoint.
+
+## Steps
+
+1. Subclass `AggregatingSerializer` with `Meta.model` and the complete public
+   dimension list in `Meta.fields`.
+2. Add Django aggregate classes or preconstructed aggregate-containing
+   expressions to `aggregates`.
+3. Override `field_to_database_path()` when a public name differs from a model
+   field or must traverse a relation.
+4. Add `slice_fields` for named, deliberately supported slice predicates.
+5. Configure normal DRF filter backends, ordering, and pagination on the
+   viewset as required by your project.
+6. Use `fields`, `slice_by_...`, and `min_`/`max_` query parameters from the
+   client to choose the report shape.
+
+For the complete configuration reference, including the API contract for
+validation errors and aggregate naming, see
+[docs/configuration.md](docs/configuration.md).
+
 
 ## Follow a sales manager's investigation
 
@@ -844,24 +862,6 @@ To add a future sales question, a developer normally makes one local change:
 add a public aggregate, dimension mapping, named slice, or application filter.
 The UI can then expose the new capability as another ordinary control rather
 than needing a new endpoint or a custom report for every question.
-
-## Turn the investigation into your own endpoint
-
-1. Subclass `AggregatingSerializer` with `Meta.model` and the complete public
-   dimension list in `Meta.fields`.
-2. Add Django aggregate classes or preconstructed aggregate-containing
-   expressions to `aggregates`.
-3. Override `field_to_database_path()` when a public name differs from a model
-   field or must traverse a relation.
-4. Add `slice_fields` for named, deliberately supported slice predicates.
-5. Configure normal DRF filter backends, ordering, and pagination on the
-   viewset as required by your project.
-6. Use `fields`, `slice_by_...`, and `min_`/`max_` query parameters from the
-   client to choose the report shape.
-
-For the complete configuration reference, including the API contract for
-validation errors and aggregate naming, see
-[docs/configuration.md](docs/configuration.md).
 
 ## License
 
