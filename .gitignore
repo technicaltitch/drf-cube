@@ -1,0 +1,31 @@
+# Python bytecode and test/tool caches
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Local environments and editor state
+.venv/
+.env
+.envrc
+.idea/
+.vscode/
+.DS_Store
+
+# Build and local runtime output
+build/
+dist/
+docs/_build/
+*.egg-info/
+assets/
+cache/
+import_run_data/
+jupyter/
+log/
+logs/
+media/
+notebooks/
+run/
+*.log
+.demo.sqlite3

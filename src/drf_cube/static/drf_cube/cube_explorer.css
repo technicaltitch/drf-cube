@@ -1,0 +1,82 @@
+* { box-sizing: border-box; }
+
+body {
+  color: #1f2933;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cube-explorer {
+  margin: 0 auto;
+  max-width: 72rem;
+  padding: 2rem 1rem;
+}
+
+header, form, section {
+  border-bottom: 1px solid #d8dee4;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+h1, h2 { line-height: 1.2; }
+
+fieldset {
+  border: 1px solid #b8c2cc;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+legend { font-weight: 700; }
+
+input, select, button { font: inherit; }
+
+input:not([type="checkbox"]), select {
+  max-width: 32rem;
+  padding: .35rem .5rem;
+  width: 100%;
+}
+
+input:focus, select:focus, button:focus, a:focus {
+  outline: 3px solid #9bd2ff;
+  outline-offset: 2px;
+}
+
+.cube-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+button, .cube-actions a, nav a {
+  border: 1px solid #52606d;
+  border-radius: .25rem;
+  padding: .4rem .65rem;
+}
+
+button { background: #fff; cursor: pointer; }
+
+.cube-actions a, nav a { color: inherit; text-decoration: none; }
+
+.cube-error {
+  background: #fff1f1;
+  border: 1px solid #c53030;
+  padding: .75rem 1rem;
+}
+
+.cube-table-wrap { overflow-x: auto; }
+
+table { border-collapse: collapse; width: 100%; }
+
+th, td {
+  border: 1px solid #b8c2cc;
+  padding: .5rem .75rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th { background: #eef2f6; }
+
+nav { display: flex; gap: .75rem; margin-top: 1rem; }
+
+.errorlist { color: #a61b1b; }
+
+@media (max-width: 40rem) {
+  .cube-explorer { padding: 1rem .75rem; }
+}

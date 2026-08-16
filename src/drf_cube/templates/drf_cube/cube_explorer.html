@@ -1,0 +1,90 @@
+{% load static i18n %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} · {% translate 'Cube Explorer' %}</title>
+  <link rel="stylesheet" href="{% static 'drf_cube/cube_explorer.css' %}">
+</head>
+<body>
+  <main class="cube-explorer">
+    <header>
+      <h1>{{ title }}</h1>
+      {% if description %}<p>{{ description }}</p>{% endif %}
+      <p><a href="{{ api_url }}">{% translate 'Open API response' %}</a></p>
+    </header>
+
+    <form method="get">
+      <fieldset>
+        <legend>{% translate 'Report controls' %}</legend>
+        {{ form.non_field_errors }}
+        {{ form.as_p }}
+      </fieldset>
+
+      {% if source_formset %}
+        <fieldset>
+          <legend>{% translate 'Source filters' %}</legend>
+          <p>{% translate 'Narrow records used for every total.' %}</p>
+          {{ source_formset.management_form }}
+          {{ source_formset.non_form_errors }}
+          {% for predicate_form in source_formset %}
+            {{ predicate_form.as_p }}
+          {% endfor %}
+        </fieldset>
+      {% endif %}
+
+      {% if slice_formset %}
+        <fieldset>
+          <legend>{% translate 'Ad-hoc comparison slices' %}</legend>
+          <p>{% translate 'Compare a selected subset without changing row totals.' %}</p>
+          {{ slice_formset.management_form }}
+          {{ slice_formset.non_form_errors }}
+          {% for predicate_form in slice_formset %}
+            {{ predicate_form.as_p }}
+          {% endfor %}
+        </fieldset>
+      {% endif %}
+
+      <p class="cube-actions">
+        <button name="editor_action" value="update">{% translate 'Update controls' %}</button>
+        {% if source_formset %}<button name="editor_action" value="add-source">{% translate 'Add source filter' %}</button>{% endif %}
+        {% if slice_formset %}<button name="editor_action" value="add-slice">{% translate 'Add comparison slice' %}</button>{% endif %}
+        <button name="editor_action" value="run">{% translate 'Run report' %}</button>
+        <a href="{{ request.path }}">{% translate 'Reset' %}</a>
+      </p>
+    </form>
+
+    {% if report_requested %}
+      <section aria-labelledby="cube-results-title">
+        <h2 id="cube-results-title">{% translate 'Report output' %}</h2>
+        {% if report_error %}
+          <div class="cube-error" role="alert">
+            <p>{{ report_error }}</p>
+            {% if report_error_items %}
+              <ul>
+                {% for name, message in report_error_items %}<li>{{ name }}: {{ message }}</li>{% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% elif table.rows %}
+          <div class="cube-table-wrap">
+            <table>
+              <thead><tr>{% for name, label in table.columns %}<th scope="col">{{ label }}</th>{% endfor %}</tr></thead>
+              <tbody>{% for row in table.rows %}<tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+            </table>
+          </div>
+          {% if table.previous_url or table.next_url %}
+            <nav aria-label="Report pagination">
+              {% if table.previous_url %}<a href="{{ table.previous_url }}">{% translate 'Previous' %}</a>{% endif %}
+              {% if table.next_url %}<a href="{{ table.next_url }}">{% translate 'Next' %}</a>{% endif %}
+            </nav>
+          {% endif %}
+        {% else %}
+          <p>{% translate 'No results match this query.' %}</p>
+        {% endif %}
+      </section>
+    {% endif %}
+  </main>
+</body>
+</html>

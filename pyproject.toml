@@ -1,0 +1,40 @@
+[build-system]
+requires = ["uv_build>=0.12.2,<0.13.0"]
+build-backend = "uv_build"
+
+[project]
+name = "drf-cube"
+version = "0.1.0"
+description = "Configurable Django REST Framework aggregation endpoints"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Chris Preager", email = "chrispreee@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
+    "Framework :: Django :: 6.1",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "Django>=4.2,<7.0",
+    "djangorestframework>=3.14,<4.0",
+]
+
+[project.optional-dependencies]
+docs = [
+    "myst-parser>=3,<5",
+    "Sphinx>=7,<9",
+]
